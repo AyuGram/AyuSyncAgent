@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DeviceId" Version="6.3.0"/>
+        <PackageReference Include="DeviceId.Linux" Version="6.3.0"/>
+        <PackageReference Include="DeviceId.Windows" Version="6.2.0"/>
+        <PackageReference Include="Serilog" Version="3.0.1"/>
+        <PackageReference Include="Websocket.Client" Version="4.6.1"/>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="AyuSync.Client.App/App.axaml" value="AyuSync.Client.App/AyuSync.Client.App.csproj" />
+        <entry key="AyuSync.Client.App/AyuGramStyles.axaml" value="AyuSync.Client.App/AyuSync.Client.App.csproj" />
+        <entry key="AyuSync.Client.App/Views/MainWindow.axaml" value="AyuSync.Client.App/AyuSync.Client.App.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

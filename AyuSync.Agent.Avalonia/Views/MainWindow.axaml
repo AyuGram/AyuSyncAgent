@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AyuSync.Client.App.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" d:DesignWidth="400"
+        d:DesignHeight="800" Width="400" Height="800" WindowStartupLocation="CenterScreen"
+        x:Class="AyuSync.Client.App.Views.MainWindow" x:DataType="vm:MainWindowViewModel" Icon="/Assets/Icon.png"
+        Title="AyuSync Preferences" CanResize="False">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Border Padding="10,40" Background="#f5f5f5">
+        <Grid RowDefinitions="*,3*">
+            <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="8">
+                <Image Source="/Assets/Logo.png" Width="96" />
+                <TextBlock TextAlignment="Center" FontSize="36" FontWeight="Bold">AyuSync</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Spacing="8">
+                <TextBlock FontSize="18">General</TextBlock>
+                <StackPanel Spacing="2">
+                    <TextBlock>AyuSync URL</TextBlock>
+                    <TextBox Text="{Binding URL}" />
+                </StackPanel>
+                <StackPanel Spacing="2">
+                    <TextBlock>AyuSync token</TextBlock>
+                    <TextBox Text="{Binding Token}" />
+                </StackPanel>
+                <StackPanel Spacing="2">
+                    <TextBlock>Enable synchronization</TextBlock>
+                    <ToggleSwitch IsChecked="{Binding Enabled}" />
+                </StackPanel>
+                <Button Margin="0,10,0,0">Visit profile</Button>
+                <Button>Force sync clients</Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+
+</Window>
