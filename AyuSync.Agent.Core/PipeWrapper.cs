@@ -11,9 +11,9 @@ namespace AyuSync.Agent.Core;
 
 public sealed class PipeWrapper
 {
-    private readonly NamedPipeServerStream _pipe;
+    private readonly PipeStream _pipe;
 
-    public PipeWrapper(NamedPipeServerStream pipe)
+    public PipeWrapper(PipeStream pipe)
     {
         _pipe = pipe;
     }

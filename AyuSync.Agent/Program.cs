@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using AyuSync.Agent.Core;
@@ -21,7 +22,7 @@ if (args.Length != 1)
     return;
 }
 
-var server = new PipeServerWrapper("AyuSyncAgent");
+var server = new PipeServerWrapper("AyuSyncAgent", PipeDirection.In);
 await server.Create();
 
 SyncService? syncService = null;
@@ -62,7 +63,8 @@ while (true)
 {
     try
     {
-        var received = await server.Wrapper.ReceiveAsync<string>();
+        // var received = await server.Wrapper.ReceiveAsync<string>();
+        var received = "123";
 
         if (string.IsNullOrWhiteSpace(received))
         {
@@ -89,6 +91,8 @@ while (true)
                 break;
             default:
                 Log.Warning("Unknown command {Command}", received);
+
+                await Task.Delay(10000);
 
                 break;
         }

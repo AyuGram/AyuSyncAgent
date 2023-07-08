@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.IO.Pipes;
 using System.Net.Http.Json;
 using System.Net.WebSockets;
 using System.Reactive.Linq;
@@ -81,7 +82,7 @@ public sealed class SyncService : IDisposable
             return;
         }
 
-        _server = new PipeServerWrapper("AyuSync");
+        _server = new PipeServerWrapper("AyuSync", PipeDirection.Out);
         await _server.Create(_ct);
 
         Log.Debug("Created named pipe");
