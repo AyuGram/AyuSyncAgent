@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AyuSync.Agent.App.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="800"
+        x:Class="AyuSync.Agent.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/Logo.png"
+        Title="AyuSync.Agent.App"
+        FontFamily="{StaticResource OpenSans}"
+        CanResize="False" Width="400" Height="800">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Debug">
+                <CheckBox IsChecked="{Binding EnableDebugMode}">Enable debug mode</CheckBox>
+            </MenuItem>
+        </Menu>
+        <Grid RowDefinitions="260,200,40,*" ColumnDefinitions="*">
+            <Grid Grid.Row="0" RowDefinitions="* ,*">
+                <Image Margin="0 30 0 0" Source="/Assets/Logo.png" Width="164" Height="164" />
+                <Label Grid.Row="1" HorizontalAlignment="Center"
+                       FontSize="28" FontWeight="Bold"
+                       Margin="0 30 0 0">AyuSync</Label>
+            </Grid>
+            
+            <Grid Grid.Row="1" RowDefinitions="40,20,20,25,20">
+                <Label FontSize="24" Margin="10 0" Padding="0">General</Label>
+                <TextBox Watermark="AyuSync URL" Grid.Row="1" Height="20" Margin="10 10"></TextBox>
+                
+                <TextBox Watermark="AyuSync token" Grid.Row="2" Height="20" Margin="10 10"></TextBox>
+    
+                <Label Grid.Row="3" Margin="10 0" Padding="0" FontSize="16">Enable synchronization</Label>
+                <ToggleSwitch Grid.Row="4" Height="30" Margin="35 10 10 0" HorizontalAlignment="Center" OffContent="" ></ToggleSwitch>
+            </Grid>
+            
+            <Grid Row="2" ColumnDefinitions="*, *">
+                <Button Width="180" HorizontalContentAlignment="Center" Margin="10 0 0 0">Visit profile</Button>
+                <Button Grid.Column="1" Width="180" HorizontalContentAlignment="Center"  Margin="0 0 10 0" HorizontalAlignment="Right">Force sync clients</Button>
+            </Grid>
+            
+            <!-- DEBUG MENU -->
+            
+            <Grid Grid.Row="2" IsVisible="{Binding !EnableDebugMode}">
+                
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

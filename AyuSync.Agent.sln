@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AyuSync.Agent", "AyuSync.Ag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AyuSync.Agent.Core", "AyuSync.Agent.Core\AyuSync.Agent.Core.csproj", "{9606D4A2-0BE9-41D6-8C27-8C9991DFCBA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AyuSync.Agent.App", "AyuSync.Agent.App\AyuSync.Agent.App.csproj", "{29EE6AE5-01E3-4B91-B8B7-7AA5ED5436BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{9606D4A2-0BE9-41D6-8C27-8C9991DFCBA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9606D4A2-0BE9-41D6-8C27-8C9991DFCBA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9606D4A2-0BE9-41D6-8C27-8C9991DFCBA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29EE6AE5-01E3-4B91-B8B7-7AA5ED5436BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29EE6AE5-01E3-4B91-B8B7-7AA5ED5436BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29EE6AE5-01E3-4B91-B8B7-7AA5ED5436BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29EE6AE5-01E3-4B91-B8B7-7AA5ED5436BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
