@@ -1,6 +1,12 @@
 # AyuSync Agent
 
+![AyuGram Logo](.github/AyuGram.png)
+
 Just a simple AyuSync backend for Telegram Desktop.
+
+## Preview
+
+![Preview](.github/preview.png)
 
 ## Why?
 

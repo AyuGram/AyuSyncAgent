@@ -6,7 +6,7 @@ using AyuSync.Agent.App.Views;
 
 namespace AyuSync.Agent.App;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {
@@ -19,7 +19,7 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = new MainWindowViewModel()
             };
         }
 

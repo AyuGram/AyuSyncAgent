@@ -1,7 +1,6 @@
 ﻿#region
 
 using System.IO.Pipes;
-using System.Security.Principal;
 using Serilog;
 
 #endregion
@@ -10,16 +9,17 @@ namespace AyuSync.Agent.Core;
 
 public sealed class PipeServerWrapper
 {
-    private readonly string _name;
     private readonly PipeDirection _direction;
+    private readonly string _name;
     private PipeStream? _namedPipe;
-    public PipeWrapper Wrapper { get; private set; }
 
     public PipeServerWrapper(string name, PipeDirection direction)
     {
         _name = name;
         _direction = direction;
     }
+
+    public PipeWrapper Wrapper { get; private set; }
 
     public async Task Create(CancellationToken cancellationToken = default)
     {

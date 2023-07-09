@@ -16,15 +16,15 @@ namespace AyuSync.Agent.Core;
 
 public sealed class SyncService : IDisposable
 {
-    private readonly SyncPreferences _preferences;
-    private readonly HttpClient _httpClient;
-    private PipeServerWrapper _server;
-    private WebsocketClient _websocket;
-
-    private bool _usable;
+    private readonly CancellationToken _ct;
 
     private readonly CancellationTokenSource _cts;
-    private readonly CancellationToken _ct;
+    private readonly HttpClient _httpClient;
+    private readonly SyncPreferences _preferences;
+    private PipeServerWrapper _server;
+
+    private bool _usable;
+    private WebsocketClient _websocket;
 
     public SyncService(SyncPreferences preferences)
     {
@@ -39,6 +39,13 @@ public sealed class SyncService : IDisposable
 
         _cts = new CancellationTokenSource();
         _ct = _cts.Token;
+    }
+
+    public void Dispose()
+    {
+        _httpClient.Dispose();
+        _cts.Cancel();
+        _cts.Dispose();
     }
 
     public async Task StartAsync()
@@ -103,6 +110,7 @@ public sealed class SyncService : IDisposable
 
                     if (res == null)
                     {
+                        await Task.Delay(500, _ct);
                         await _server.Create(_ct);
                     }
                 }
@@ -181,12 +189,5 @@ public sealed class SyncService : IDisposable
         client.ErrorReconnectTimeout = TimeSpan.FromSeconds(5);
 
         return client;
-    }
-
-    public void Dispose()
-    {
-        _httpClient.Dispose();
-        _cts.Cancel();
-        _cts.Dispose();
     }
 }

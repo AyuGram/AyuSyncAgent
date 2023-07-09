@@ -11,6 +11,7 @@ namespace AyuSync.Agent.Core;
 
 public sealed class PipeWrapper
 {
+    private readonly SemaphoreSlim _lock = new(1, 1);
     private readonly PipeStream _pipe;
 
     public PipeWrapper(PipeStream pipe)
@@ -29,6 +30,8 @@ public sealed class PipeWrapper
 
     public async Task<bool?> SendAsync(string json, CancellationToken cancellationToken = default)
     {
+        await _lock.WaitAsync(cancellationToken);
+
         var data = Encoding.UTF8.GetBytes(json);
         var length = BitConverter.GetBytes(data.Length);
 
@@ -37,6 +40,8 @@ public sealed class PipeWrapper
         try
         {
             await _pipe.WriteAsync(length, cancellationToken);
+            await _pipe.FlushAsync(cancellationToken);
+
             await _pipe.WriteAsync(data, cancellationToken);
             await _pipe.FlushAsync(cancellationToken);
         }
@@ -45,10 +50,19 @@ public sealed class PipeWrapper
             Log.Error(e, "Error while sending data, need recreate pipe");
             return null;
         }
+        catch (IOException e)
+        {
+            Log.Error(e, "Error while sending data, need recreate pipe");
+            return null;
+        }
         catch (Exception e)
         {
             Log.Error(e, "Error while sending data: {Message}", e.Message);
             return false;
+        }
+        finally
+        {
+            _lock.Release();
         }
 
         return true;
