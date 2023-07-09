@@ -21,22 +21,22 @@
                 <CheckBox IsChecked="{Binding EnableDebugMode}">Enable debug mode</CheckBox>
             </MenuItem>
         </Menu>
-        <Grid RowDefinitions="260,200,40,*" ColumnDefinitions="*">
+        <Grid RowDefinitions="260,180,40,280,*" ColumnDefinitions="*">
             <Grid Grid.Row="0" RowDefinitions="* ,*">
                 <Image Margin="0 30 0 0" Source="/Assets/Logo.png" Width="164" Height="164" />
                 <Label Grid.Row="1" HorizontalAlignment="Center"
-                       FontSize="28" FontWeight="Bold"
+                       FontSize="28" FontFamily="{StaticResource OpenSansSb}"
                        Margin="0 30 0 0">AyuSync</Label>
             </Grid>
             
             <Grid Grid.Row="1" RowDefinitions="40,20,20,25,20">
-                <Label FontSize="24" Margin="10 0" Padding="0">General</Label>
+                <Label FontFamily="{StaticResource OpenSansSb}" FontSize="24" Margin="10 0" Padding="0">General</Label>
                 <TextBox Watermark="AyuSync URL" Grid.Row="1" Height="20" Margin="10 10"></TextBox>
                 
                 <TextBox Watermark="AyuSync token" Grid.Row="2" Height="20" Margin="10 10"></TextBox>
     
                 <Label Grid.Row="3" Margin="10 0" Padding="0" FontSize="16">Enable synchronization</Label>
-                <ToggleSwitch Grid.Row="4" Height="30" Margin="35 10 10 0" HorizontalAlignment="Center" OffContent="" ></ToggleSwitch>
+                <ToggleSwitch Grid.Row="4" Height="30" Margin="10 2.5 0 0" HorizontalAlignment="Left" OffContent="" OnContent="" ></ToggleSwitch>
             </Grid>
             
             <Grid Row="2" ColumnDefinitions="*, *">
@@ -46,8 +46,20 @@
             
             <!-- DEBUG MENU -->
             
-            <Grid Grid.Row="2" IsVisible="{Binding !EnableDebugMode}">
-                
+            <Grid Grid.Row="3" IsVisible="{Binding EnableDebugMode}" ColumnDefinitions="*" RowDefinitions="30,190,30,30">
+                <Label FontFamily="{StaticResource OpenSansSb}" Height="35" FontSize="24" Margin="10 10  10 0" Padding="0">Debug</Label>
+                <Grid Grid.Row="1" Margin="0 5 0 0" RowDefinitions="*,*,*,*,*,*">
+                    <Label Grid.Row="0" Height="30" Margin="10 0" FontSize="16">Sync status: not registered</Label>
+                    <Label Grid.Row="1" Height="30" Margin="10 0" FontSize="16">Register status codes: ?</Label>
+                    <Label Grid.Row="2" Height="30" Margin="10 0" FontSize="16" >
+                        Device identifier: bukvichisla
+                    </Label>
+                    <Label Grid.Row="3" Height="30" Margin="10 0" FontSize="16">Last sent event: never</Label>
+                    <Label Grid.Row="4" Height="30" Margin="10 0" FontSize="16">Last received event:never</Label>
+                </Grid>
+                <Label Grid.Row="2" Height="30" VerticalAlignment="Top" Margin="10 -30 0 0" FontSize="16">Use HTTPS &amp;	 WSS</Label>
+                <ToggleSwitch Grid.Row="3" Height="30" VerticalAlignment="Top" Margin="10 -30 0 0" FontSize="16"></ToggleSwitch>
+
             </Grid>
         </Grid>
     </DockPanel>
