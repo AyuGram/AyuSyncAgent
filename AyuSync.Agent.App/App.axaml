@@ -1,0 +1,19 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AyuSync.Agent.App.App"
+             xmlns:local="using:AyuSync.Agent.App"
+             RequestedThemeVariant="Default">
+    
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+  
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+    
+    <Application.Resources>
+        <FontFamily x:Key="OpenSans">avares://AyuSync.Agent.App/Assets/Font.ttf#Open Sans</FontFamily>
+        <FontFamily x:Key="OpenSansSb">avares://AyuSync.Agent.App/Assets/FontSB.ttf#Open Sans</FontFamily>
+    </Application.Resources>
+</Application>
