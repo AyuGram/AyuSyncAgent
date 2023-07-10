@@ -21,7 +21,8 @@ public sealed class SyncService : IDisposable
     private readonly CancellationTokenSource _cts;
     private readonly HttpClient _httpClient;
     private readonly SyncPreferences _preferences;
-    private PipeServerWrapper _server;
+    private PipeServerWrapper _receiver;
+    private PipeServerWrapper _sender;
 
     private bool _usable;
     private WebsocketClient _websocket;
@@ -89,10 +90,14 @@ public sealed class SyncService : IDisposable
             return;
         }
 
-        _server = new PipeServerWrapper("AyuSync", PipeDirection.Out);
-        await _server.Create(_ct);
+        _sender = new PipeServerWrapper("AyuSync", PipeDirection.Out);
+        await _sender.Create(_ct);
 
-        Log.Debug("Created named pipe");
+        _receiver = new PipeServerWrapper("AyuSync1338", PipeDirection.In);
+        await _receiver.Create(_ct);
+
+        await _sender.Wrapper.SendAsync("{}", _ct); // dummy packet to notify that we can accept connections
+        await _receiver.Wrapper.WaitForAnyConnection();
 
         _websocket = CreateWebSocketClient();
         _websocket.ReconnectionHappened.Subscribe(x =>
@@ -102,7 +107,7 @@ public sealed class SyncService : IDisposable
                 Log.Debug("Received message {Message}", msg.Text);
                 while (!_ct.IsCancellationRequested)
                 {
-                    var res = await _server.Wrapper.SendAsync(msg.Text, _ct);
+                    var res = await _sender.Wrapper.SendAsync(msg.Text, _ct);
                     if (res == true)
                     {
                         break;
@@ -111,13 +116,44 @@ public sealed class SyncService : IDisposable
                     if (res == null)
                     {
                         await Task.Delay(500, _ct);
-                        await _server.Create(_ct);
+                        await _sender.Create(_ct);
                     }
                 }
             })).Concat().Subscribe();
         });
 
         await _websocket.Start();
+        await Task.Factory.StartNew(Receive, TaskCreationOptions.LongRunning);
+    }
+
+    private async Task Receive()
+    {
+        while (!_ct.IsCancellationRequested)
+        {
+            _ct.ThrowIfCancellationRequested();
+
+            string data;
+            try
+            {
+                data = await _receiver.Wrapper.ReceiveAsync();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Failed to receive data");
+                continue;
+            }
+
+            Log.Debug("Received {Length} chars of a message: {Data}", data.Length, data);
+
+            try
+            {
+                _websocket.Send(data);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Failed to send received data");
+            }
+        }
     }
 
     public async Task StopAsync()

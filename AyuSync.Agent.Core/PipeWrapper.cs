@@ -68,20 +68,36 @@ public sealed class PipeWrapper
         return true;
     }
 
-    public async Task<T?> ReceiveAsync<T>()
+    public async Task<string> ReceiveAsync()
     {
         var lengthBuffer = new byte[sizeof(int)];
         // ReSharper disable once MustUseReturnValue
         await _pipe.ReadAsync(lengthBuffer);
         var length = BitConverter.ToInt32(lengthBuffer);
 
-        Log.Debug("Receiving {Length} bytes of data, type {Type}", length, typeof(T).Name);
+        Log.Debug("Receiving {Length} bytes of data", length);
 
         var dataBuffer = new byte[length];
         // ReSharper disable once MustUseReturnValue
         await _pipe.ReadAsync(dataBuffer);
         var data = Encoding.UTF8.GetString(dataBuffer);
 
+        return data;
+    }
+
+    public async Task<T?> ReceiveAsync<T>()
+    {
+        var data = await ReceiveAsync();
         return JsonSerializer.Deserialize<T>(data);
+    }
+
+    public async Task WaitForAnyConnection()
+    {
+        if (_pipe is not NamedPipeServerStream server)
+        {
+            return;
+        }
+
+        await server.WaitForConnectionAsync();
     }
 }

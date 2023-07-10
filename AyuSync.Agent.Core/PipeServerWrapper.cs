@@ -34,7 +34,7 @@ public sealed class PipeServerWrapper
             {
                 if (_direction == PipeDirection.In)
                 {
-                    _namedPipe = new NamedPipeServerStream(_name, PipeDirection.InOut);
+                    _namedPipe = new NamedPipeServerStream(_name, PipeDirection.In);
                 }
                 else
                 {
